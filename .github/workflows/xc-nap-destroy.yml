@@ -5,9 +5,10 @@ on:
     branches:
       - destroy-xc-nap
   pull_request:
+    branches-ignore:
+      - main
 
 jobs:
-
   terraform_xc:
     name: "F5XC WAAP"
     runs-on: ubuntu-latest
@@ -17,7 +18,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -39,7 +40,7 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-      
+
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -80,7 +81,7 @@ jobs:
       - name: Terraform Destroy
         if: github.ref == 'refs/heads/destroy-xc-nap' && github.event_name == 'push'
         run: terraform destroy -auto-approve -input=false
-  
+
   terraform_arcadia:
     name: "Arcadia WebApp"
     runs-on: ubuntu-latest
@@ -91,7 +92,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -113,7 +114,7 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-      
+
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -165,7 +166,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -188,7 +189,7 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-      
+
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -240,7 +241,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -263,7 +264,7 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-      
+
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -315,7 +316,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -334,11 +335,11 @@ jobs:
             }
           }
           EOF
-          
+
       - name: Terraform Init
         id: init
         run: terraform init
-      
+
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -379,9 +380,3 @@ jobs:
       - name: Terraform Destroy
         if: github.ref == 'refs/heads/destroy-xc-nap' && github.event_name == 'push'
         run: terraform destroy -auto-approve -input=false
-
-
-
-
-
-

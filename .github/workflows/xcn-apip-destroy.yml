@@ -5,6 +5,8 @@ on:
     branches:
       - destroy-xcn-api
   pull_request:
+    branches-ignore:
+      - main
 
 jobs:
   terraform_argo:
@@ -16,7 +18,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -35,11 +37,11 @@ jobs:
             }
           }
           EOF
-          
+
       - name: Terraform Init
         id: init
         run: terraform init
-      
+
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -90,7 +92,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -113,7 +115,7 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-      
+
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -164,7 +166,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -187,7 +189,7 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-      
+
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -227,3 +229,4 @@ jobs:
       - name: Terraform Destroy
         if: github.ref == 'refs/heads/destroy-xcn-api' && github.event_name == 'push'
         run: terraform destroy -auto-approve -input=false
+
